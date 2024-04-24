@@ -1360,7 +1360,7 @@ export class Player extends BaseGameObject<ObjectCategory.Player> {
 
             // Explode if barrel
             if (this.loadout.skin.explodes) {
-                this.game.addExplosion("barrel_explosion", this.position, this);
+                this.game.addExplosion(`${this.loadout.skin.obstacle}_explosion`, this.position, this);
             }
         }
 
