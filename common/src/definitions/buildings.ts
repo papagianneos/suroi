@@ -265,6 +265,66 @@ export const Buildings = ObjectDefinitions.create<BuildingDefinition>()(
             ]
         },
         {
+            // Junky-Yard
+            idString: "junk_yard",
+            name: "Junk Yard",
+            rotationMode: RotationMode.None,
+            spawnHitbox: RectangleHitbox.fromRect(200, 200),
+            scopeHitbox: RectangleHitbox.fromRect(60, 60),
+            /*floorImages: [{
+                key: "porta_potty_floor",
+                position: Vec.create(0, 1.5)
+            }],*/
+            floors: [],
+            obstacles: [
+                { idString: "dead_tree_big", position: Vec.create(0, 0) },
+
+                // Top Right
+                { idString: "stove", position: Vec.create(50, 50) },
+                { idString: "stove", position: Vec.create(50, 70) },
+                { idString: "stove", position: Vec.create(75, 70) },
+                { idString: "stove", position: Vec.create(25, 50) },
+                { idString: "stove", position: Vec.create(25, 70) },
+                { idString: "stove", position: Vec.create(75, 50) },
+
+                // Top Left
+                { idString: "fridge", position: Vec.create(-50, 50) },
+                { idString: "fridge", position: Vec.create(-50, 70) },
+                { idString: "fridge", position: Vec.create(-75, 70) },
+                { idString: "fridge", position: Vec.create(-25, 50) },
+                { idString: "fridge", position: Vec.create(-25, 70) },
+                { idString: "fridge", position: Vec.create(-75, 50) },
+
+                // Bottom Left
+                { idString: "toilet", position: Vec.create(-50, -50) },
+                { idString: "toilet", position: Vec.create(-50, -70) },
+                { idString: "toilet", position: Vec.create(-75, -70) },
+                { idString: "toilet", position: Vec.create(-25, -50) },
+                { idString: "toilet", position: Vec.create(-25, -70) },
+                { idString: "toilet", position: Vec.create(-75, -50) },
+
+                
+                // Bottom Right
+                { idString: "regular_crate", position: Vec.create(50, -50) },
+                { idString: "regular_crate", position: Vec.create(50, -70) },
+                { idString: "regular_crate", position: Vec.create(75, -70) },
+                { idString: "regular_crate", position: Vec.create(25, -50) },
+                { idString: "regular_crate", position: Vec.create(25, -70) },
+                { idString: "regular_crate", position: Vec.create(75, -50) },
+
+                // Around the big dead tree
+                { idString: "pumpkin", position: Vec.create(30, 0) },
+                { idString: "pumpkin", position: Vec.create(-30, 0) },
+                { idString: "pumpkin", position: Vec.create(0, 30) },
+                { idString: "pumpkin", position: Vec.create(0, -30) },
+            ],
+
+            lootSpawners: [
+                { table: "ground_loot", position: Vec.create(75, 0) },
+                { table: "ground_loot", position: Vec.create(-75, 0) }
+            ]
+        },
+        {
             idString: "green_house",
             name: "Green House",
             spawnHitbox: RectangleHitbox.fromRect(110, 70),
