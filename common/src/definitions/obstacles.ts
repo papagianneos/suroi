@@ -172,7 +172,7 @@ export const Obstacles = ObjectDefinitions.create<ObstacleDefinition>()(
                 destroy: 0.5
             },
             spawnMode: MapObjectSpawnMode.GrassAndSand,
-            rotationMode: RotationMode.Binary,
+            rotationMode: RotationMode.Full,//RotationMode.Binary,
             hitbox: RectangleHitbox.fromRect(9.2, 9.2),
             hasLoot: true
         }),
@@ -300,6 +300,23 @@ export const Obstacles = ObjectDefinitions.create<ObstacleDefinition>()(
         {
             idString: "oak_tree",
             name: "Oak Tree",
+            material: "tree",
+            health: 180,
+            scale: {
+                spawnMin: 0.9,
+                spawnMax: 1,
+                destroy: 0.75
+            },
+            hitbox: new CircleHitbox(5.5),
+            spawnHitbox: new CircleHitbox(15),
+            rotationMode: RotationMode.Full,
+            variations: 3,
+            zIndex: ZIndexes.ObstaclesLayer4,
+            allowFlyover: FlyoverPref.Never
+        },
+        {
+            idString: "dead_tree",
+            name: "Dead Tree",
             material: "tree",
             health: 180,
             scale: {
@@ -496,7 +513,7 @@ export const Obstacles = ObjectDefinitions.create<ObstacleDefinition>()(
             {
                 idString: "regular_crate",
                 name: "Regular Crate",
-                rotationMode: RotationMode.Binary,
+                rotationMode: RotationMode.Full,//RotationMode.Binary,RotationMode.Binary,
                 frames: {
                     particle: "crate_particle",
                     residue: "regular_crate_residue"
@@ -508,7 +525,7 @@ export const Obstacles = ObjectDefinitions.create<ObstacleDefinition>()(
             {
                 idString: "flint_crate",
                 name: "Flint Crate",
-                rotationMode: RotationMode.None,
+                rotationMode: RotationMode.Full,//RotationMode.None,
                 hideOnMap: true
             }
         ),
@@ -517,7 +534,7 @@ export const Obstacles = ObjectDefinitions.create<ObstacleDefinition>()(
             {
                 idString: "aegis_crate",
                 name: "AEGIS Crate",
-                rotationMode: RotationMode.None,
+                rotationMode: RotationMode.Full,//RotationMode.None,
                 hideOnMap: true
             }
         ),
@@ -527,7 +544,7 @@ export const Obstacles = ObjectDefinitions.create<ObstacleDefinition>()(
                 idString: "grenade_crate",
                 name: "Grenade Crate",
                 hitbox: RectangleHitbox.fromRect(6.5, 6.3),
-                rotationMode: RotationMode.None,
+                rotationMode: RotationMode.Full,//RotationMode.None,
                 allowFlyover: FlyoverPref.Always
             }
         ),
@@ -537,7 +554,7 @@ export const Obstacles = ObjectDefinitions.create<ObstacleDefinition>()(
                 idString: "melee_crate",
                 name: "Melee Crate",
                 hitbox: RectangleHitbox.fromRect(6.5, 6.3),
-                rotationMode: RotationMode.None,
+                rotationMode: RotationMode.Full,//RotationMode.None,
                 allowFlyover: FlyoverPref.Always
             }
         ),
@@ -784,7 +801,7 @@ export const Obstacles = ObjectDefinitions.create<ObstacleDefinition>()(
             },
             hasLoot: true,
             hitbox: RectangleHitbox.fromRect(9.1, 6.45, Vec.create(0, -0.2)),
-            rotationMode: RotationMode.Limited,
+            rotationMode: RotationMode.Full,//RotationMode.Limited,
             allowFlyover: FlyoverPref.Never,
             frames: {
                 particle: "metal_particle"
@@ -802,7 +819,7 @@ export const Obstacles = ObjectDefinitions.create<ObstacleDefinition>()(
                 destroy: 0.8
             },
             hitbox: RectangleHitbox.fromRect(9.1, 6.45, Vec.create(0, -0.2)),
-            rotationMode: RotationMode.Limited,
+            rotationMode: RotationMode.Full, //RotationMode.Limited,
             explosion: "stove_explosion",
             frames: {
                 particle: "metal_particle"
@@ -821,7 +838,7 @@ export const Obstacles = ObjectDefinitions.create<ObstacleDefinition>()(
             },
             hasLoot: true,
             hitbox: RectangleHitbox.fromRect(9.1, 6.45, Vec.create(0, -0.2)),
-            rotationMode: RotationMode.Limited,
+            rotationMode: RotationMode.Full, //RotationMode.Limited,
             reflectBullets: true
         },
         {
@@ -881,7 +898,7 @@ export const Obstacles = ObjectDefinitions.create<ObstacleDefinition>()(
                 RectangleHitbox.fromRect(v(-3.18, 1.25), v(3.2, 4.05)),
                 new CircleHitbox(2.5)
             ]), */
-            rotationMode: RotationMode.Limited,
+            rotationMode: RotationMode.Full,//RotationMode.Limited,
             hasLoot: true
         },
         {
