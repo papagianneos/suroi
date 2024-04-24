@@ -210,7 +210,8 @@ const maps = {
             container_7: 1,
             container_8: 1,
             container_9: 1,
-            container_10: 1
+            container_10: 1,
+            junk_yard: 1
         },
         obstacles: {
             oil_tank: 6,
