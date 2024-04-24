@@ -300,6 +300,18 @@ export const Buildings = ObjectDefinitions.create<BuildingDefinition>()(
                 { idString: "window", position: Vec.create(17.59, 27.52), rotation: 1 },
                 { idString: "window", position: Vec.create(-23.44, -30.22), rotation: 1 },
                 { idString: "door", position: Vec.create(33.03, 6.74), rotation: 1 },
+
+                // -----------------------------------------------------------------------
+                // For Halloween: Additional pumpkins in doors.
+                // -----------------------------------------------------------------------
+                { idString: "pumpkin", position: Vec.create(-45, 33) },
+                { idString: "pumpkin", position: Vec.create(-26.5, 33) },
+
+                // Exterior
+                { idString: "pumpkin", position: Vec.create(37.5, 15) },
+                { idString: "pumpkin", position: Vec.create(37.5, -1) },
+                // -----------------------------------------------------------------------
+
                 { idString: "door", position: Vec.create(11.92, -13.22), rotation: 1 },
                 { idString: "door", position: Vec.create(-36.15, 27.47), rotation: 2 },
                 { idString: "door", position: Vec.create(-22.56, -6.26), rotation: 0 },
@@ -911,6 +923,17 @@ export const Buildings = ObjectDefinitions.create<BuildingDefinition>()(
                 { idString: "bookshelf", position: Vec.create(5.11, -21.95), rotation: 1 },
                 { idString: "couch", position: Vec.create(-21.48, -1.01), rotation: 3 },
                 { idString: "large_drawer", position: Vec.create(-25.98, 21.3), rotation: 1 },
+
+                // -----------------------------------------------------------------------
+                // For Halloween: Additional pumpkins in doors.
+                // -----------------------------------------------------------------------
+                { idString: "pumpkin", position: Vec.create(-23.5, 34) },
+                { idString: "pumpkin", position: Vec.create(-5, 34) },
+
+                { idString: "pumpkin", position: Vec.create(25, -34) },
+                { idString: "pumpkin", position: Vec.create(7.5, -34) },
+                // -----------------------------------------------------------------------
+
                 // Bathroom Left
                 {
                     idString: "house_wall_4",
