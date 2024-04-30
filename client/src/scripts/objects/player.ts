@@ -1445,23 +1445,6 @@ export class Player extends GameObject<ObjectCategory.Player> {
                 falloff: 0.2,
                 maxRange: 96
             });
-
-            // Obstacle particles
-            this.game.particleManager.spawnParticle({
-                frames: `${this.disguiseMaterial}_particle`,
-                zIndex: ZIndexes.Players + 1,
-                position,
-                lifetime: 1000,
-                scale: {
-                    start: 0.5,
-                    end: 1
-                },
-                alpha: {
-                    start: 1,
-                    end: 0
-                },
-                speed: Vec.fromPolar(angle, randomFloat(0.5, 1))
-            });
         }
     }
 
