@@ -174,6 +174,7 @@ export const LootTables: Record<string, LootTable> = {
         max: 1,
         loot: [
            { item: "s_g17", weight: 0.95 },
+           { item: "g19_cursed", weight: 0.95 },
            { item: "usas12", weight: 0.05 },
            { tier: "disguises", weight: 0.94 }
         ]
@@ -435,6 +436,7 @@ export const LootTables: Record<string, LootTable> = {
         max: 5,
         loot: [
             { tier: "disguises", weight: 1 },
+            { item: "spooky_barkskin", weight: 0.95 },
             { tier: "special_guns", weight: 1 },
             { tier: "special_equipment", weight: 0.65 },
             { tier: "special_healing_items", weight: 0.65 },
