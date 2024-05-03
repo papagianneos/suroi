@@ -75,7 +75,9 @@ export const Skins = ObjectDefinitions.create<SkinDefinition>()(
         simple("disguise", ["oak_tree", "tree"], ["Barkskin"]),
         simple("disguise", ["rock", "stone"], ["Rock Solid"]),
         simple("disguise", ["toilet", "porcelain"], ["Smelly"]),
+        simple("disguise", ["large_refinery_barrel", "metal", true], ["Large Suicide Bomber"]),
         simple("disguise", ["stove", "metal", true], ["One With Cooking"]),
+        simple("disguise", ["dead_tree_big", "tree"], ["Spooky Barkskin"]),
 
         ...[
             "HAZEL Jumpsuit",
