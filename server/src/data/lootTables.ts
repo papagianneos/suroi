@@ -436,7 +436,7 @@ export const LootTables: Record<string, LootTable> = {
         max: 5,
         loot: [
             { tier: "disguises", weight: 1 },
-            { item: "spooky_barkskin", weight: 0.95 },
+            { item: "spooky_barkskin", weight: 0.25 },
             { tier: "special_guns", weight: 1 },
             { tier: "special_equipment", weight: 0.65 },
             { tier: "special_healing_items", weight: 0.65 },
@@ -523,6 +523,7 @@ export const LootTables: Record<string, LootTable> = {
 export const LootTiers: Record<string, WeightedItem[]> = {
     disguises: [
         { item: "fish_in_a_barrel", weight: 0.8 },
+        { item: "goldfish_in_a_barrel", weight: 0.1 },
         { item: "guy_in_a_box", weight: 0.85 },
         { item: "nato_employee", weight: 0.6 },
         { item: "flint_stones", weight: 0.09 },
