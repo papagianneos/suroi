@@ -269,7 +269,7 @@ export const Buildings = ObjectDefinitions.create<BuildingDefinition>()(
             idString: "light_pumpkin",
             name: "Pumpkin",
             spawnHitbox: RectangleHitbox.fromRect(20, 20),
-            scopeHitbox: RectangleHitbox.fromRect(0, 0),
+            scopeHitbox: undefined,
             obstacles: [
                 { idString: "halloween_light", position: Vec.create(0, 0) },
                 { idString: "dark_pumpkin", position: Vec.create(0, 0) }
