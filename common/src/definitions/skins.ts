@@ -78,6 +78,7 @@ export const Skins = ObjectDefinitions.create<SkinDefinition>()(
         simple("disguise", ["large_refinery_barrel", "metal", true], ["Large Suicide Bomber"]),
         simple("disguise", ["stove", "metal", true], ["One With Cooking"]),
         simple("disguise", ["dead_tree_big", "tree"], ["Spooky Barkskin"]),
+        simple("disguise", ["airdrop_crate", "crate"], ["Hot Drop"]),
         simple("disguise", ["super_barrel", "metal", true], ["Goldfish in a Barrel"]),
 
         ...[
