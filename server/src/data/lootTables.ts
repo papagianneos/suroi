@@ -174,6 +174,7 @@ export const LootTables: Record<string, LootTable> = {
         max: 1,
         loot: [
            { item: "s_g17", weight: 0.95 },
+           { item: "g19_cursed", weight: 0.95 },
            { item: "usas12", weight: 0.05 },
            { tier: "disguises", weight: 0.94 }
         ]
@@ -190,6 +191,13 @@ export const LootTables: Record<string, LootTable> = {
             { tier: "throwables", weight: 0.3 },
             { tier: "melee", weight: 0.04 },
             { tier: "disguises", weight: 0.6 }
+        ]
+    },
+    usas_pumpkin: {
+        min: 1,
+        max: 1,
+        loot: [
+           { item: "usas12", weight: 1 },
         ]
     },
     blueberry_bush: {
