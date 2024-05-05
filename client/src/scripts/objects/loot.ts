@@ -51,7 +51,10 @@ export class Loot extends GameObject {
             const itemType = definition.itemType;
 
             // Halloween Disguises
-            this.images.item.setFrame(`${definition.idString}${itemType === ItemType.Skin ? Loots.fromString<SkinDefinition>(definition.idString).isDisguise ? "" : "_base" : ""}`);
+            if (Loots.fromString<SkinDefinition>(definition.idString).isDisguise) {
+                this.images.item.setFrame(Loots.fromString<SkinDefinition>(definition.idString).obstacle);
+            }
+            else this.images.item.setFrame(`${definition.idString}${itemType === ItemType.Skin ? "_base" : ""}`);
 
             this.container.addChild(this.images.background, this.images.item);
 
