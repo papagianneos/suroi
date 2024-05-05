@@ -52,7 +52,7 @@ export class Loot extends GameObject {
 
             // Halloween Disguises
             if (Loots.fromString<SkinDefinition>(definition.idString).isDisguise) {
-                this.images.item.setFrame(Loots.fromString<SkinDefinition>(definition.idString).obstacle);
+                this.images.item.setFrame(Loots.fromString<SkinDefinition>(definition.idString).obstacleSprite);
             }
             else this.images.item.setFrame(`${definition.idString}${itemType === ItemType.Skin ? "_base" : ""}`);
 
