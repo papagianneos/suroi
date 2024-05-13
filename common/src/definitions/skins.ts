@@ -72,11 +72,11 @@ export const Skins = ObjectDefinitions.create<SkinDefinition>()(
 
         // Halloween Disguises
         simple("disguise", ["regular_crate", "crate"], ["Guy in a Box"]),
-        simple("disguise", ["grenade_crate", "crate"], ["NATO Employee"]),
+        simple("disguise", ["grenade_crate", "crate"], ["Boombox"]),
         simple("disguise", ["flint_stone", "stone"], ["FLINT STONES"]),
         simple("disguise", ["barrel", "metal", true], ["Fish in a Barrel"]),
         simple("disguise", ["fridge", "appliance"], ["Indistructible"]),
-        simple("disguise", ["pine_tree", "tree"], ["Barkskin"]),
+        simple("disguise", ["pine_tree", "tree"], ["Lorax"]),
         simple("disguise", ["rock", "stone"], ["Rock Solid"]),
         simple("disguise", ["toilet", "porcelain"], ["Smelly"]),
         simple("disguise", ["washing_machine", "appliance"], ["C-Cleaner"]),
