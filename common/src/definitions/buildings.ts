@@ -424,7 +424,7 @@ export const Buildings = ObjectDefinitions.create<BuildingDefinition>()(
             idString: "junk_yard",
             name: "Junk Yard",
             rotationMode: RotationMode.None,
-            spawnHitbox: RectangleHitbox.fromRect(200, 180),
+            spawnHitbox: RectangleHitbox.fromRect(190, 180),
             scopeHitbox: undefined,
             floors: [],
             obstacles: [
