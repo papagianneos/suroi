@@ -54,7 +54,6 @@ export class Player extends GameObject<ObjectCategory.Player> {
     // -----------------------------
     isWearingDisguise?: boolean
     disguiseMaterial?: string
-    disguiseObstacle?: string
     // -----------------------------
 
     footstepSound?: GameSound;
@@ -145,7 +144,6 @@ export class Player extends GameObject<ObjectCategory.Player> {
         // -------------------------------------
         this.isWearingDisguise = false;
         this.disguiseMaterial = undefined;
-        this.disguiseObstacle = undefined;
         // --------------------------------------
 
         this.images = {
@@ -568,7 +566,6 @@ export class Player extends GameObject<ObjectCategory.Player> {
 
                 this.isWearingDisguise = Loots.fromString<SkinDefinition>(skinID).isDisguise;
                 this.disguiseMaterial = Loots.fromString<SkinDefinition>(skinID).material;
-                this.disguiseObstacle = Loots.fromString<SkinDefinition>(skinID).obstacle;
                 // -------------------------------------------------------------------------------------------
 
                 this.game.uiManager.skinID = skinID;
