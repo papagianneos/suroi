@@ -54,6 +54,7 @@ export class Player extends GameObject<ObjectCategory.Player> {
     // -----------------------------
     isWearingDisguise?: boolean
     disguiseMaterial?: string
+    disguiseObstacle?: string
     // -----------------------------
 
     footstepSound?: GameSound;
@@ -76,7 +77,14 @@ export class Player extends GameObject<ObjectCategory.Player> {
         readonly aimTrail: TilingSprite
         readonly vest: SuroiSprite
         readonly body: SuroiSprite
+
+        // ----------------------------------------
+        // Disguises
+        // ----------------------------------------
         readonly disguise: SuroiSprite
+        readonly disguiseResidue: SuroiSprite
+        // ----------------------------------------
+
         readonly leftFist: SuroiSprite
         readonly rightFist: SuroiSprite
         readonly leftLeg?: SuroiSprite
@@ -132,14 +140,20 @@ export class Player extends GameObject<ObjectCategory.Player> {
     constructor(game: Game, id: number, data: Required<ObjectsNetData[ObjectCategory.Player]>) {
         super(game, id);
 
+        // -------------------------------------
+        // Disguises
+        // -------------------------------------
         this.isWearingDisguise = false;
         this.disguiseMaterial = undefined;
+        this.disguiseObstacle = undefined;
+        // --------------------------------------
 
         this.images = {
             aimTrail: new TilingSprite({ texture: SuroiSprite.getTexture("aimTrail"), width: 20, height: 6000 }),
             vest: new SuroiSprite().setVisible(false),
             body: new SuroiSprite(),
             disguise: new SuroiSprite(),
+            disguiseResidue: new SuroiSprite(),
             leftFist: new SuroiSprite(),
             rightFist: new SuroiSprite(),
             leftLeg: game.teamMode ? new SuroiSprite().setPos(-38, 26).setZIndex(-1) : undefined,
@@ -152,7 +166,7 @@ export class Player extends GameObject<ObjectCategory.Player> {
             waterOverlay: new SuroiSprite("water_overlay").setVisible(false).setTint(COLORS.water)
         };
 
-        this.disguiseContainer.addChild(this.images.disguise); // Disguise container
+        this.disguiseContainer.addChild(this.images.disguise, this.images.disguiseResidue); // Disguise container
         this.container.addChild(
             this.images.aimTrail,
             this.images.vest,
@@ -523,6 +537,14 @@ export class Player extends GameObject<ObjectCategory.Player> {
             if (this.dead || this.beingRevived) {
                 clearInterval(this.bleedEffectInterval);
                 this.bleedEffectInterval = undefined;
+
+                // ---------------------------------------------------------------------------------
+                // Upon death, if the player is wearing a disguise we want the residue to appear.
+                // ---------------------------------------------------------------------------------
+                this.images.disguise.setVisible(false);
+                this.disguiseContainer.visible = true;
+                this.disguiseContainer.zIndex = (ZIndexes.DeathMarkers + 1);
+                // ---------------------------------------------------------------------------------
             }
 
             if (this.dead && this.teammateName) this.teammateName.container.visible = false;
@@ -546,6 +568,7 @@ export class Player extends GameObject<ObjectCategory.Player> {
 
                 this.isWearingDisguise = Loots.fromString<SkinDefinition>(skinID).isDisguise;
                 this.disguiseMaterial = Loots.fromString<SkinDefinition>(skinID).material;
+                this.disguiseObstacle = Loots.fromString<SkinDefinition>(skinID).obstacle;
                 // -------------------------------------------------------------------------------------------
 
                 this.game.uiManager.skinID = skinID;
@@ -554,12 +577,14 @@ export class Player extends GameObject<ObjectCategory.Player> {
             const skinDef = Loots.fromString<SkinDefinition>(skinID);
             const tint = skinDef.grassTint ? GHILLIE_TINT : 0xffffff;
 
-            const { body, leftFist, rightFist, leftLeg, rightLeg, disguise } = this.images;
+            const { body, leftFist, rightFist, leftLeg, rightLeg, disguise, disguiseResidue } = this.images;
 
             // Check if it's a disguise. The frame will be set anyway.
-            disguise.setVisible(skinDef.isDisguise);
+            disguise.setVisible(skinDef.isDisguise && !this.dead);
+            disguiseResidue.setVisible(skinDef.isDisguise && this.dead);
             if (Loots.fromString<SkinDefinition>(skinID).obstacle) {
                 disguise.setFrame(Loots.fromString<SkinDefinition>(skinID).obstacleSprite);
+                disguiseResidue.setFrame(`${Loots.fromString<SkinDefinition>(skinID).obstacle}_residue`);
             }
 
             // In case it's a disguise, use a default skin so we have texture.
@@ -619,7 +644,7 @@ export class Player extends GameObject<ObjectCategory.Player> {
                 : this.downed
                     ? ZIndexes.DownedPlayers
                     : ZIndexes.Players;
-            this.disguiseContainer.zIndex = this.container.zIndex + 1; // Disguise Container
+            this.disguiseContainer.zIndex = this.dead ? (ZIndexes.DeathMarkers + 1) : (this.container.zIndex + 1); // Disguise Container
         }
 
         if (data.action !== undefined) {
