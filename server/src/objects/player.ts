@@ -1358,9 +1358,26 @@ export class Player extends BaseGameObject<ObjectCategory.Player> {
                 }
             }
 
-            // Explode if barrel
-            if (this.loadout.skin.explodes) {
-                this.game.addExplosion(`${this.loadout.skin.obstacle}_explosion`, this.position, this);
+            // Explode if barrel but if tear gas, do not explode but add tear gas particles
+            if (this.loadout.skin.explodes) { // Barrels and other
+                if (this.loadout.skin.idString !== "tear_gas-r") {
+                    this.game.addExplosion(`${this.loadout.skin.obstacle}_explosion`, this.position, this);
+                }
+                else { // Tear Gas Crate Disguise
+                    const tearGas = {
+                        type: "tear_gas_particle",
+                        count: 10,
+                        deployAnimation: {
+                            duration: 4000,
+                            staggering: {
+                                delay: 300,
+                                initialAmount: 2
+                            }
+                        },
+                        spawnRadius: 15
+                    }
+                    this.game.addSyncedParticles(tearGas, this.position);
+                }
             }
         }
 
