@@ -12,9 +12,6 @@ import { type Map } from "../map";
 import { Player, type PlayerContainer } from "../objects/player";
 import { type LootTables } from "./lootTables";
 
-// added
-import { SkinDefinition } from "../../../common/src/definitions/skins";
-
 export interface MapDefinition {
     readonly width: number
     readonly height: number
