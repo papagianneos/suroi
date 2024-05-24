@@ -1160,7 +1160,7 @@ export class Player extends BaseGameObject<ObjectCategory.Player> {
         const newModifiers: this["modifiers"] = {
             maxHealth: 1,
             maxAdrenaline: 1,
-            baseSpeed: 1.2, // changed because slow for some reason (Original value is 1)
+            baseSpeed: 1,
             minAdrenaline: 0
         };
 
