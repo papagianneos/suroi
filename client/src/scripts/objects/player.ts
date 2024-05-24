@@ -103,6 +103,12 @@ export class Player extends GameObject<ObjectCategory.Player> {
 
     healingParticlesEmitter: ParticleEmitter;
 
+    // -----------------------------------------
+    // Disguises: Smoke Emitter.
+    // -----------------------------------------
+    smokeEmitter: ParticleEmitter;
+    // -----------------------------------------
+
     readonly anims: {
         emote?: Tween<Container>
         emoteHide?: Tween<Container>
@@ -187,6 +193,24 @@ export class Player extends GameObject<ObjectCategory.Player> {
 
         this.updateFistsPosition(false);
         this.updateWeapon();
+
+        // -----------------------------------------------------------------------------------
+        // Disguises: Smoke Emitter.
+        // -----------------------------------------------------------------------------------
+        this.smokeEmitter = this.game.particleManager.addEmitter({
+            delay: 400,
+            active: false,
+            spawnOptions: () => ({
+                frames: "smoke_particle",
+                position: this.position,
+                zIndex: 999,
+                lifetime: 3500,
+                scale: { start: 0, end: randomFloat(4, 5) },
+                alpha: { start: 0.9, end: 0 },
+                speed: Vec.fromPolar(randomFloat(-1.9, -2.1), randomFloat(5, 6))
+            })
+        });
+        // -----------------------------------------------------------------------------------
 
         this.healingParticlesEmitter = this.game.particleManager.addEmitter({
             delay: 350,
@@ -440,6 +464,12 @@ export class Player extends GameObject<ObjectCategory.Player> {
 
             this.dead = full.dead;
 
+            // -----------------------------------------------------------------------------------
+            // Disguises: Smoke Emitter.
+            // -----------------------------------------------------------------------------------
+            this.spawnDisguiseSmokeEmitter = full.spawnDisguiseSmokeEmitter;
+            // -----------------------------------------------------------------------------------
+
             this.teamID = data.full.teamID;
             if (
                 !this.isActivePlayer &&
@@ -515,6 +545,12 @@ export class Player extends GameObject<ObjectCategory.Player> {
                 bleed();
                 this.bleedEffectInterval = setInterval(bleed, 1000);
             }
+
+            // ----------------------------------------------------------------------------
+            // Disguises: Smoke Emitter
+            // ----------------------------------------------------------------------------
+            this.smokeEmitter.active = this.spawnDisguiseSmokeEmitter && !this.dead;
+            // ----------------------------------------------------------------------------
 
             if (this.dead || this.beingRevived) {
                 clearInterval(this.bleedEffectInterval);
