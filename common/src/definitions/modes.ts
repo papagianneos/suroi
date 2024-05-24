@@ -28,7 +28,7 @@ export const Modes: ModeDefinition[] = [
     {
         idString: "halloween",
         colors: {
-            grass: "hsl(65, 100%, 9%)",
+            grass: "hsl(65, 70%, 9%)",
             water: "hsl(4, 100%, 14%)",
             border: "hsl(4, 90%, 12%)",
             beach: "hsl(33, 77%, 21%)",
