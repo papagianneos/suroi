@@ -341,12 +341,6 @@ export class Player extends BaseGameObject<ObjectCategory.Player> {
 
     isInsideBuilding = false;
 
-    // --------------------------------------------
-    // Disguises: Smoke Emitter.
-    // --------------------------------------------
-    spawnDisguiseSmokeEmitter = false;
-    // --------------------------------------------
-
     floor = "water";
 
     screenHitbox = RectangleHitbox.fromRect(1, 1);
@@ -755,12 +749,6 @@ export class Player extends BaseGameObject<ObjectCategory.Player> {
                 : this.inventory.scope;
         }
         this.isInsideBuilding = isInsideBuilding;
-
-        // --------------------------------------------------------------------------------------------------------------
-        // Disguises: Smoke Emitter.
-        // --------------------------------------------------------------------------------------------------------------
-        this.spawnDisguiseSmokeEmitter = this.loadout.skin.isDisguise && this.loadout.skin.explodes && this.health < 50;
-        // --------------------------------------------------------------------------------------------------------------
 
         if (this.downed) {
             this.effectiveScope = DEFAULT_SCOPE;
@@ -1690,13 +1678,6 @@ export class Player extends BaseGameObject<ObjectCategory.Player> {
             rotation: this.rotation,
             full: {
                 dead: this.dead,
-
-                // ----------------------------------------------------------------
-                // Disguises: Smoke Emitter
-                // ----------------------------------------------------------------
-                spawnDisguiseSmokeEmitter: this.spawnDisguiseSmokeEmitter,
-                // ----------------------------------------------------------------
-
                 downed: this.downed,
                 beingRevived: !!this.beingRevivedBy,
                 teamID: this.teamID ?? 0,
