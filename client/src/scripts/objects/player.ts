@@ -124,6 +124,13 @@ export class Player extends GameObject<ObjectCategory.Player> {
     vestLevel = NaN;
     backpackLevel = NaN;
 
+    // -------------------------------------
+    // Disguises: Hit Sound & Particles.
+    // -------------------------------------
+    hitSound = "";
+    hitParticle = "";
+    // -------------------------------------
+
     hitbox = new CircleHitbox(GameConstants.player.radius);
 
     floorType: keyof typeof FloorTypes = "grass";
@@ -439,6 +446,13 @@ export class Player extends GameObject<ObjectCategory.Player> {
             this.disguiseContainer.visible = this.container.visible; // Disguise container
 
             this.dead = full.dead;
+
+            // ----------------------------------------
+            // Disguises: Hit Sound & Particles.
+            // ----------------------------------------
+            this.hitSound = full.hitSound;
+            this.hitParticle = full.hitParticle;
+            // ----------------------------------------
 
             this.teamID = data.full.teamID;
             if (
@@ -1388,7 +1402,7 @@ export class Player extends GameObject<ObjectCategory.Player> {
 
     hitEffect(position: Vector, angle: number, sound?: string): void {
         this.game.soundManager.play(
-            sound ?? (randomBoolean() ? "player_hit_1" : "player_hit_2"), {
+            sound ?? this.hitSound, {
             position,
             falloff: 0.2,
             maxRange: 96
@@ -1396,7 +1410,7 @@ export class Player extends GameObject<ObjectCategory.Player> {
 
         // Regular particles
         this.game.particleManager.spawnParticle({
-            frames: "blood_particle",
+            frames: this.hitParticle,
             zIndex: ZIndexes.Players + 1,
             position,
             lifetime: 1000,
