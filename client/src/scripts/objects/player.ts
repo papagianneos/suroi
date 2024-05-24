@@ -74,7 +74,6 @@ export class Player extends GameObject<ObjectCategory.Player> {
         // Disguises
         // ----------------------------------------
         readonly disguise: SuroiSprite
-        readonly disguiseResidue: SuroiSprite
         // ----------------------------------------
 
         readonly leftFist: SuroiSprite
@@ -137,7 +136,6 @@ export class Player extends GameObject<ObjectCategory.Player> {
             vest: new SuroiSprite().setVisible(false),
             body: new SuroiSprite(),
             disguise: new SuroiSprite(),
-            disguiseResidue: new SuroiSprite(),
             leftFist: new SuroiSprite(),
             rightFist: new SuroiSprite(),
             leftLeg: game.teamMode ? new SuroiSprite().setPos(-38, 26).setZIndex(-1) : undefined,
@@ -150,7 +148,7 @@ export class Player extends GameObject<ObjectCategory.Player> {
             waterOverlay: new SuroiSprite("water_overlay").setVisible(false).setTint(COLORS.water)
         };
 
-        this.disguiseContainer.addChild(this.images.disguise, this.images.disguiseResidue); // Disguise container
+        this.disguiseContainer.addChild(this.images.disguise); // Disguise container
         this.container.addChild(
             this.images.aimTrail,
             this.images.vest,
@@ -521,14 +519,6 @@ export class Player extends GameObject<ObjectCategory.Player> {
             if (this.dead || this.beingRevived) {
                 clearInterval(this.bleedEffectInterval);
                 this.bleedEffectInterval = undefined;
-
-                // ---------------------------------------------------------------------------------
-                // Upon death, if the player is wearing a disguise we want the residue to appear.
-                // ---------------------------------------------------------------------------------
-                this.images.disguise.setVisible(false);
-                this.disguiseContainer.visible = true;
-                this.disguiseContainer.zIndex = (ZIndexes.DeathMarkers + 1);
-                // ---------------------------------------------------------------------------------
             }
 
             if (this.dead && this.teammateName) this.teammateName.container.visible = false;
@@ -545,48 +535,12 @@ export class Player extends GameObject<ObjectCategory.Player> {
             const skinDef = Loots.fromString<SkinDefinition>(skinID);
             const tint = skinDef.grassTint ? GHILLIE_TINT : 0xffffff;
 
-            const { body, leftFist, rightFist, leftLeg, rightLeg, disguise, disguiseResidue } = this.images;
+            const { body, leftFist, rightFist, leftLeg, rightLeg, disguise } = this.images;
 
             // Check if it's a disguise. The frame will be set anyway.
             disguise.setVisible(skinDef.isDisguise && !this.dead);
-            disguiseResidue.setVisible(skinDef.isDisguise && this.dead);
             if (Loots.fromString<SkinDefinition>(skinID).obstacle) {
                 disguise.setFrame(Loots.fromString<SkinDefinition>(skinID).obstacleSprite);
-
-                // ---------------------------------------------------------------------------------------------------------
-                // Special Cases.
-                // ---------------------------------------------------------------------------------------------------------
-                let frame = "";
-
-                switch (Loots.fromString<SkinDefinition>(skinID).obstacleSprite) {
-                    case "tear_gas_crate":
-                        frame = `regular_crate_residue`;
-                        break;
-                    case "blueberry_bush":
-                        frame = `bush_residue`;
-                        break;
-                    default:
-                        frame = `${Loots.fromString<SkinDefinition>(skinID).obstacleSprite}_residue`;
-                }
-
-                disguiseResidue.setFrame(frame);
-                // ---------------------------------------------------------------------------------------------------------
-
-                // Play the disguise's material destroyed sound upon death.
-                if (this.dead && this.isActivePlayer && Loots.fromString<SkinDefinition>(skinID).isDisguise) {
-                    this.playSound(`${Loots.fromString<SkinDefinition>(skinID).material}_destroyed`, {
-                        falloff: 0.2,
-                        maxRange: 96
-                    });
-
-                    // Special Case: Tear Gas smoke sound.
-                    if (Loots.fromString<SkinDefinition>(skinID).idString === "tear_gas-r") {
-                        this.playSound(`smoke_grenade`, {
-                            falloff: 0.2,
-                            maxRange: 96
-                        });
-                    }
-                }
             }
 
             // In case it's a disguise, use a default skin so we have texture.
@@ -646,7 +600,7 @@ export class Player extends GameObject<ObjectCategory.Player> {
                 : this.downed
                     ? ZIndexes.DownedPlayers
                     : ZIndexes.Players;
-            this.disguiseContainer.zIndex = this.dead ? (ZIndexes.DeathMarkers + 1) : (this.container.zIndex + 1); // Disguise Container
+            this.disguiseContainer.zIndex = this.container.zIndex + 1; // Disguise Container
         }
 
         if (data.action !== undefined) {
