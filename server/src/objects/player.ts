@@ -22,7 +22,7 @@ import { Collision, Geometry, Numeric } from "../../../common/src/utils/math";
 import { type Timeout } from "../../../common/src/utils/misc";
 import { ItemType, type ExtendedWearerAttributes, type ReferenceTo, type ReifiableDef } from "../../../common/src/utils/objectDefinitions";
 import { type FullData } from "../../../common/src/utils/objectsSerializations";
-import { pickRandomInArray } from "../../../common/src/utils/random";
+import { pickRandomInArray, randomBoolean } from "../../../common/src/utils/random";
 import { SuroiBitStream } from "../../../common/src/utils/suroiBitStream";
 import { FloorTypes } from "../../../common/src/utils/terrain";
 import { Vec, type Vector } from "../../../common/src/utils/vector";
@@ -44,6 +44,7 @@ import { BaseGameObject, type GameObject } from "./gameObject";
 import { Loot } from "./loot";
 import { Obstacle } from "./obstacle";
 import { SyncedParticle } from "./syncedParticle";
+import { Obstacles } from "../../../common/src/definitions/obstacles";
 
 export interface PlayerContainer {
     readonly teamID?: string
@@ -340,6 +341,13 @@ export class Player extends BaseGameObject<ObjectCategory.Player> {
     effectiveSwitchDelay = 0;
 
     isInsideBuilding = false;
+
+    // --------------------------------------
+    // Disguises: Hit Sound & Particle.
+    // --------------------------------------
+    hitSound = "";
+    hitParticle = "";
+    // --------------------------------------
 
     floor = "water";
 
@@ -753,6 +761,36 @@ export class Player extends BaseGameObject<ObjectCategory.Player> {
         if (this.downed) {
             this.effectiveScope = DEFAULT_SCOPE;
         }
+
+        // -------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // Disguises: Hit Sounds & Particles
+        // -------------------------------------------------------------------------------------------------------------------------------------------------------------
+        if (this.loadout.skin.isDisguise) {
+            this.hitSound = `${Obstacles.reify(this.loadout.skin.obstacle).material}_hit_${randomBoolean() ? "1" : "2"}`;
+
+            // Pain. But It Works.
+            if (Obstacles.reify(this.loadout.skin.obstacle).particleVariations) {
+                const longString = `${Obstacles.reify(this.loadout.skin.obstacle).frames.particle ?? `${this.loadout.skin.obstacle}_particle`}_${randomBoolean() ? "1" : "2"}`
+
+                this.hitParticle =
+                    longString ??
+                    `${this.loadout.skin.obstacle}_particle_${randomBoolean() ? "1" : "2"}`;
+            }
+
+            else {
+                this.hitParticle =
+                    Obstacles.reify(this.loadout.skin.obstacle).frames.particle ??
+                    `${this.loadout.skin.obstacle}_particle`;
+            }
+
+            console.log("PARTICLE: " + this.hitParticle);
+
+        }
+        else {
+            this.hitSound = `player_hit_${randomBoolean() ? "1" : 2}`;
+            this.hitParticle = "blood_particle";
+        }
+        // -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         let scopeTarget: ReferenceTo<ScopeDefinition> | undefined;
         depleters.forEach(def => {
@@ -1678,6 +1716,14 @@ export class Player extends BaseGameObject<ObjectCategory.Player> {
             rotation: this.rotation,
             full: {
                 dead: this.dead,
+
+                // -------------------------------------
+                // Disguises: Hit Sounds & Particles
+                // -------------------------------------
+                hitSound: this.hitSound,
+                hitParticle: this.hitParticle,
+                // -------------------------------------
+
                 downed: this.downed,
                 beingRevived: !!this.beingRevivedBy,
                 teamID: this.teamID ?? 0,
