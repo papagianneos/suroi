@@ -22,7 +22,7 @@ import { Collision, Geometry, Numeric } from "../../../common/src/utils/math";
 import { type Timeout } from "../../../common/src/utils/misc";
 import { ItemType, type ExtendedWearerAttributes, type ReferenceTo, type ReifiableDef } from "../../../common/src/utils/objectDefinitions";
 import { type FullData } from "../../../common/src/utils/objectsSerializations";
-import { pickRandomInArray, random } from "../../../common/src/utils/random"; // Added "random" for halloween disguises.
+import { pickRandomInArray } from "../../../common/src/utils/random";
 import { SuroiBitStream } from "../../../common/src/utils/suroiBitStream";
 import { FloorTypes } from "../../../common/src/utils/terrain";
 import { Vec, type Vector } from "../../../common/src/utils/vector";
@@ -42,13 +42,8 @@ import { Emote } from "./emote";
 import { type Explosion } from "./explosion";
 import { BaseGameObject, type GameObject } from "./gameObject";
 import { Loot } from "./loot";
-import { type Obstacle } from "./obstacle";
+import { Obstacle } from "./obstacle";
 import { SyncedParticle } from "./syncedParticle";
-
-// Halloween Disguises
-import { LootTables } from "../data/lootTables";
-import { getLootTableLoot } from "../utils/misc";
-import { type WeightedItem } from "../data/lootTables";
 
 export interface PlayerContainer {
     readonly teamID?: string
@@ -1339,46 +1334,17 @@ export class Player extends BaseGameObject<ObjectCategory.Player> {
         // Halloween Disguises
         if (this.loadout.skin.isDisguise) {
 
-            // Drop loot if the disguise obstacle has loot
-            const lootTable = LootTables[this.loadout.skin.obstacle];
+            // ------------------------------------------------------------------------------------------------------------------
+            // IMPROVED: We generate an obstacle and then kill it.
+            // That way, we do not need to code stuff in the client.
+            // ------------------------------------------------------------------------------------------------------------------
+            let disguiseObstacle = this.game.map.generateObstacle(this.loadout.skin.obstacle, this.position);
 
-            if (lootTable) {
-                for (let i = 0; i < random(lootTable.min, lootTable.max); i++) {
-                    if (lootTable.loot.length > 0 && lootTable.loot[0] instanceof Array) {
-                        for (const loot of lootTable.loot) {
-                            for (const drop of getLootTableLoot(loot as WeightedItem[])) {
-                                this.game.addLoot(drop.idString, this.position, drop.count);
-                            }
-                        }
-                    } else {
-                        for (const drop of getLootTableLoot(lootTable.loot as WeightedItem[])) {
-                            this.game.addLoot(drop.idString, this.position, drop.count);
-                        }
-                    }
-                }
-            }
+            this.game.grid.addObject(disguiseObstacle);
+            this.game.updateObjects = true;
+            disguiseObstacle.damage(disguiseObstacle.maxHealth, this);
+            // ------------------------------------------------------------------------------------------------------------------
 
-            // Explode if barrel but if tear gas, do not explode but add tear gas particles
-            if (this.loadout.skin.explodes) { // Barrels and other
-                if (this.loadout.skin.idString !== "tear_gas-r") {
-                    this.game.addExplosion(`${this.loadout.skin.obstacle}_explosion`, this.position, this);
-                }
-                else { // Tear Gas Crate Disguise
-                    const tearGas = {
-                        type: "tear_gas_particle",
-                        count: 10,
-                        deployAnimation: {
-                            duration: 4000,
-                            staggering: {
-                                delay: 300,
-                                initialAmount: 2
-                            }
-                        },
-                        spawnRadius: 15
-                    }
-                    this.game.addSyncedParticles(tearGas, this.position);
-                }
-            }
         }
 
         // Drop weapons
