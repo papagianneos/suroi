@@ -559,10 +559,12 @@ export const LootTiers: Record<string, WeightedItem[]> = {
         { item: "fish_in_a_barrel", weight: 0.8 },
         { item: "goldfish_in_a_barrel", weight: 0.1 },
         { item: "guy_in_a_box", weight: 0.85 },
+        { item: "guy_in_ammunition", weight: 0.5 },
         { item: "blue_boxman", weight: 0.25 },
         { item: "orange_boxman", weight: 0.25 },
         { item: "boombox", weight: 0.6 },
         { item: "gold_solid", weight: 0.09 },
+        { item: "flint_stones", weight: 0.08 },
         { item: "the_lorax", weight: 0.7 },
         { item: "rock_solid", weight: 0.7 },
         { item: "smelly", weight: 0.67 },
@@ -573,6 +575,10 @@ export const LootTiers: Record<string, WeightedItem[]> = {
         { item: "indistructible", weight: 0.37 },
         { item: "c-cleaner", weight: 0.37 },
         { item: "one_with_cooking", weight: 0.65 },
+        { item: "orange_leaf", weight: 0.7 },
+        { item: "mossy", weight: 0.7 },
+        { item: "cracked_at_suroi", weight: 0.68 },
+        { item: "red_leaf", weight: 0.7 },
         { item: "large_suicide_bomber", weight: 0.001 }
     ],
     guns: [
